@@ -1,0 +1,266 @@
+/* Google Font (No installation needed) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0a2540, #0d47a1, #1976d2);
+  min-height: 100vh;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  padding: 18px 40px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-heading {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: linear-gradient(to right, #ffffff, #90caf9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Container */
+.container {
+  width: 95%;
+  max-width: 1100px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  animation: fadeIn 0.9s ease-in-out;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+/* Card Design */
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 14px 40px rgba(0, 0, 0, 0.35);
+}
+
+#form-heading {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #ffffff;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+input:focus {
+  border: 1px solid #90caf9;
+  box-shadow: 0px 0px 12px rgba(144, 202, 249, 0.7);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Error Messages */
+small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #ff8a80;
+  margin-top: 2px;
+}
+
+/* Button */
+.btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1e88e5, #42a5f5, #90caf9);
+  color: #0a2540;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 10px 20px rgba(66, 165, 245, 0.4);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Search Section */
+.search-section input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.search-section input:focus {
+  border: 1px solid #90caf9;
+  box-shadow: 0px 0px 14px rgba(144, 202, 249, 0.65);
+}
+
+/* Table Card */
+.table-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+  overflow-x: auto;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+thead {
+  background: linear-gradient(135deg, rgba(30, 136, 229, 0.7), rgba(144, 202, 249, 0.4));
+}
+
+th {
+  text-align: left;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+td {
+  padding: 15px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: scale(1.01);
+}
+
+/* Table header flex for Name + Sort */
+.th-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Dropdown */
+select {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+select:hover {
+  background: rgba(255, 255, 255, 0.20);
+}
+
+option {
+  color: #0a2540;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 20px;
+  }
+
+  .container {
+    margin: 25px auto;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  th, td {
+    font-size: 13px;
+    padding: 12px;
+  }
+}
