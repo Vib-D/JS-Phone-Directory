@@ -11,46 +11,14 @@ const tableBody = document.getElementById("tableBody");
 const searchBar = document.getElementById("searchBar");
 const sortSelect = document.getElementById("sort");
 
-// Hide error messages initially
+// Hide errors initially
 nameError.style.display = "none";
 phoneError.style.display = "none";
 emailError.style.display = "none";
 
-// Store contacts (load from existing table first)
 let contacts = [];
 
-// Load existing rows from HTML table into contacts array
-function loadInitialContacts() {
-  const rows = tableBody.querySelectorAll("tr");
-
-  rows.forEach(row => {
-    const cols = row.querySelectorAll("td");
-    if (cols.length === 3) {
-      contacts.push({
-        name: cols[0].innerText.trim(),
-        phone: cols[1].innerText.trim(),
-        email: cols[2].innerText.trim()
-      });
-    }
-  });
-}
-
-// Render table based on provided data
-function renderTable(data) {
-  tableBody.innerHTML = "";
-
-  data.forEach(contact => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${contact.name}</td>
-      <td>${contact.phone}</td>
-      <td>${contact.email}</td>
-    `;
-    tableBody.appendChild(tr);
-  });
-}
-
-// Validations
+// ------------------- VALIDATIONS -------------------
 function isValidName(name) {
   return /^[A-Za-z ]+$/.test(name) && name.length > 0 && name.length <= 20;
 }
@@ -67,7 +35,52 @@ function isValidEmail(email) {
   );
 }
 
-// Add Contact
+// ------------------- LOCAL STORAGE -------------------
+function saveContacts() {
+  localStorage.setItem("phoneDirectoryContacts", JSON.stringify(contacts));
+}
+
+function loadContacts() {
+  const stored = localStorage.getItem("phoneDirectoryContacts");
+
+  if (stored) {
+    contacts = JSON.parse(stored);
+  } else {
+    // Default contact if no data exists
+    contacts = [
+      { name: "John Doe", phone: "9999999999", email: "john@email.com" }
+    ];
+    saveContacts();
+  }
+}
+
+// ------------------- RENDER TABLE -------------------
+function renderTable(data) {
+  tableBody.innerHTML = "";
+
+  data.forEach(contact => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${contact.name}</td>
+      <td>${contact.phone}</td>
+      <td>${contact.email}</td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+}
+
+// ------------------- UNIQUE CHECK -------------------
+function isPhoneUnique(phone) {
+  return !contacts.some(contact => contact.phone === phone);
+}
+
+function isEmailUnique(email) {
+  return !contacts.some(contact => contact.email === email);
+}
+
+// ------------------- ADD CONTACT -------------------
 addButton.addEventListener("click", () => {
   const name = nameInput.value.trim();
   const phone = phoneInput.value.trim();
@@ -75,21 +88,35 @@ addButton.addEventListener("click", () => {
 
   let valid = true;
 
+  // Name validation
   if (!isValidName(name)) {
+    nameError.innerText = "Only alphabets/spaces allowed (max 20 chars)";
     nameError.style.display = "block";
     valid = false;
   } else {
     nameError.style.display = "none";
   }
 
+  // Phone validation
   if (!isValidPhone(phone)) {
+    phoneError.innerText = "Phone number must be exactly 10 digits";
+    phoneError.style.display = "block";
+    valid = false;
+  } else if (!isPhoneUnique(phone)) {
+    phoneError.innerText = "This phone number already exists";
     phoneError.style.display = "block";
     valid = false;
   } else {
     phoneError.style.display = "none";
   }
 
+  // Email validation
   if (!isValidEmail(email)) {
+    emailError.innerText = "Enter a valid email (max 40 chars)";
+    emailError.style.display = "block";
+    valid = false;
+  } else if (!isEmailUnique(email)) {
+    emailError.innerText = "This email already exists";
     emailError.style.display = "block";
     valid = false;
   } else {
@@ -98,10 +125,11 @@ addButton.addEventListener("click", () => {
 
   if (!valid) return;
 
-  // Add to array
+  // Add contact
   contacts.push({ name, phone, email });
 
-  // Render updated table
+  // Save + render
+  saveContacts();
   renderTable(contacts);
 
   // Clear inputs
@@ -110,8 +138,7 @@ addButton.addEventListener("click", () => {
   emailInput.value = "";
 });
 
-// Search (instant filtering)
-
+// ------------------- SEARCH (Instant) -------------------
 searchBar.addEventListener("input", () => {
   const query = searchBar.value.trim();
 
@@ -126,7 +153,7 @@ searchBar.addEventListener("input", () => {
   renderTable(filtered);
 });
 
-// Sorting function
+// ------------------- SORT -------------------
 function applySorting() {
   const order = sortSelect.value;
 
@@ -136,12 +163,12 @@ function applySorting() {
     contacts.sort((a, b) => b.name.localeCompare(a.name));
   }
 
+  saveContacts();
   renderTable(contacts);
 }
 
-// Sort event
 sortSelect.addEventListener("change", applySorting);
-sortSelect.addEventListener("click", applySorting);
 
-// Initial load
-loadInitialContacts();
+// ------------------- INITIAL LOAD -------------------
+loadContacts();
+renderTable(contacts);
