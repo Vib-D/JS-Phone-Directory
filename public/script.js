@@ -111,28 +111,19 @@ addButton.addEventListener("click", () => {
 });
 
 // Search (instant filtering)
-let resetTimer;
 
 searchBar.addEventListener("input", () => {
-  const query = searchBar.value;
-
-  clearTimeout(resetTimer);
-
-  if (query === "") {
-    renderTable(contacts);
-    return;
-  }
+  const query = searchBar.value.trim();
 
   const filtered = contacts.filter(contact => {
-    return contact.name.includes(query) || contact.phone.includes(query);
+    return (
+      contact.name.includes(query) ||
+      contact.phone.includes(query) ||
+      contact.email.includes(query)
+    );
   });
 
   renderTable(filtered);
-
-  // Auto reset after 500ms (as per Nightwatch expectation)
-  resetTimer = setTimeout(() => {
-    renderTable(contacts);
-  }, 500);
 });
 
 // Sorting function
